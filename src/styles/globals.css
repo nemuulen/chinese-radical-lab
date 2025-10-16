@@ -1,0 +1,699 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 14px;
+  --background: linear-gradient(135deg, #faf7ff 0%, #f3f0ff 50%, #ede9fe 100%);
+  --foreground: oklch(0.145 0 0);
+  --card: #ffffff;
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: #8b5cf6;
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.95 0.02 300);
+  --secondary-foreground: #6b46c1;
+  --muted: #f3f0ff;
+  --muted-foreground: #8b5cf6;
+  --accent: #e9d5ff;
+  --accent-foreground: #6b46c1;
+  --destructive: #d4183d;
+  --destructive-foreground: #ffffff;
+  --border: rgba(139, 92, 246, 0.2);
+  --input: transparent;
+  --input-background: #faf7ff;
+  --switch-background: #d8b4fe;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: oklch(0.708 0.2 300);
+  --chart-1: oklch(0.646 0.222 300);
+  --chart-2: oklch(0.6 0.118 280);
+  --chart-3: oklch(0.398 0.07 320);
+  --chart-4: oklch(0.828 0.189 290);
+  --chart-5: oklch(0.769 0.188 310);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: #8b5cf6;
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0.02 300);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0.02 300);
+  --sidebar-ring: oklch(0.708 0.2 300);
+  
+  /* Blue to Purple gradient variables */
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-secondary: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  --gradient-accent: linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #f59e0b 100%);
+  --gradient-welcome: linear-gradient(135deg, #3b82f6 0%, #6366f1 25%, #8b5cf6 50%, #a855f7 75%, #c084fc 100%);
+  --soft-purple-gradient: linear-gradient(135deg, #faf7ff 0%, #f3f0ff 30%, #ede9fe 60%, #e9d5ff 100%);
+  
+  /* 3D Glass and Morning Sunshine Variables */
+  --glass-bg: rgba(255, 255, 255, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --morning-sunshine: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+  --sunshine-glow: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+  
+  /* Mobile App Safe Area Variables */
+  --safe-area-inset-top: env(safe-area-inset-top);
+  --safe-area-inset-right: env(safe-area-inset-right);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom);
+  --safe-area-inset-left: env(safe-area-inset-left);
+  --status-bar-height: var(--safe-area-inset-top, 20px);
+  --bottom-safe-area: var(--safe-area-inset-bottom, 0px);
+}
+
+.dark {
+  --background: linear-gradient(135deg, #1a1625 0%, #2d1b69 50%, #1e1b4b 100%);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: #a855f7;
+  --primary-foreground: oklch(0.145 0 0);
+  --secondary: oklch(0.269 0.02 300);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0.02 300);
+  --muted-foreground: oklch(0.708 0.2 300);
+  --accent: oklch(0.269 0.02 300);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0.02 300);
+  --input: oklch(0.269 0.02 300);
+  --ring: oklch(0.439 0.2 300);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --chart-1: oklch(0.488 0.243 300);
+  --chart-2: oklch(0.696 0.17 280);
+  --chart-3: oklch(0.769 0.188 320);
+  --chart-4: oklch(0.627 0.265 290);
+  --chart-5: oklch(0.645 0.246 310);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 300);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0.02 300);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0.02 300);
+  --sidebar-ring: oklch(0.439 0.2 300);
+  
+  /* Dark mode blue to purple gradients */
+  --gradient-primary: linear-gradient(135deg, #1e40af 0%, #4c1d95 100%);
+  --gradient-secondary: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+  --gradient-accent: linear-gradient(135deg, #7c3aed 0%, #c026d3 50%, #f59e0b 100%);
+  --gradient-welcome: linear-gradient(135deg, #1e40af 0%, #3730a3 25%, #4c1d95 50%, #581c87 75%, #6b21a8 100%);
+  --soft-purple-gradient: linear-gradient(135deg, #1a1625 0%, #2d1b69 30%, #1e1b4b 60%, #312e81 100%);
+  
+  /* Dark mode glass and sunshine */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --morning-sunshine: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --sunshine-glow: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* Mobile App Base Styles */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+
+  html {
+    /* Mobile app optimizations */
+    font-size: var(--font-size);
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile */
+    overflow: hidden;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  body {
+    background: var(--soft-purple-gradient);
+    background-attachment: fixed;
+    @apply text-foreground;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+    /* Prevent pull-to-refresh on mobile */
+    overscroll-behavior-y: contain;
+    /* Safe area support */
+    padding-top: var(--status-bar-height);
+    padding-bottom: var(--bottom-safe-area);
+  }
+
+  /* Remove default mobile browser behaviors */
+  input, button, textarea, select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0;
+  }
+
+  /* Enhanced touch targets for mobile */
+  button, [role="button"], [tabindex] {
+    min-height: 44px; /* iOS recommended touch target size */
+    min-width: 44px;
+  }
+}
+
+/**
+ * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
+ */
+@layer base {
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h2 {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h4 {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    p {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+
+    label {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    button {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    input {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+  }
+}
+
+/* Apple-style welcome screen animations */
+@keyframes apple-fade-in {
+  0% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes apple-slide-up {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+}
+
+@keyframes apple-logo-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.95;
+  }
+}
+
+@keyframes apple-hello-breathe {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.01);
+  }
+}
+
+/* 3D Glass Morphism Animation */
+@keyframes glass-morning-glow {
+  0%, 100% {
+    box-shadow: 
+      0 8px 32px rgba(255, 154, 158, 0.3),
+      0 4px 16px rgba(254, 207, 239, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.25) 0%,
+      rgba(255, 217, 155, 0.15) 50%,
+      rgba(255, 154, 158, 0.1) 100%);
+  }
+  50% {
+    box-shadow: 
+      0 12px 40px rgba(255, 217, 155, 0.4),
+      0 6px 20px rgba(255, 154, 158, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 217, 155, 0.2) 50%,
+      rgba(254, 207, 239, 0.15) 100%);
+  }
+}
+
+@keyframes text-sunshine-glow {
+  0%, 100% {
+    text-shadow: 
+      0 0 20px rgba(255, 217, 155, 0.6),
+      0 0 40px rgba(255, 154, 158, 0.4),
+      0 0 60px rgba(254, 207, 239, 0.3),
+      0 2px 4px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, 
+      #ffffff 0%,
+      #ffd9b3 30%,
+      #ff9a9e 60%,
+      #fecfef 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  50% {
+    text-shadow: 
+      0 0 30px rgba(255, 217, 155, 0.8),
+      0 0 50px rgba(255, 154, 158, 0.6),
+      0 0 80px rgba(254, 207, 239, 0.4),
+      0 2px 6px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, 
+      #ffffff 0%,
+      #ffd89b 25%,
+      #ff9a9e 50%,
+      #fecfef 75%,
+      #a8edea 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+@keyframes blue-to-purple-shift {
+  0% {
+    background-position: 0% 50%;
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 25%, #8b5cf6 50%, #a855f7 75%, #c084fc 100%);
+  }
+  25% {
+    background-position: 25% 75%;
+    background: linear-gradient(135deg, #1d4ed8 0%, #4f46e5 25%, #7c3aed 50%, #9333ea 75%, #a855f7 100%);
+  }
+  50% {
+    background-position: 100% 50%;
+    background: linear-gradient(135deg, #2563eb 0%, #5b21b6 25%, #6b21a8 50%, #7e22ce 75%, #8b5cf6 100%);
+  }
+  75% {
+    background-position: 75% 25%;
+    background: linear-gradient(135deg, #3730a3 0%, #581c87 25%, #6b21a8 50%, #7e22ce 75%, #9333ea 100%);
+  }
+  100% {
+    background-position: 0% 50%;
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 25%, #8b5cf6 50%, #a855f7 75%, #c084fc 100%);
+  }
+}
+
+@keyframes swipe-bounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(10px);
+    opacity: 1;
+  }
+}
+
+@keyframes minimal-float {
+  0%, 100% {
+    transform: translateY(-5px);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(5px);
+    opacity: 1;
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Horizontal slide animations for screen transitions */
+@keyframes slide-left-enter {
+  0% {
+    transform: translateX(100vw);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-left-exit {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100vw);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-right-enter {
+  0% {
+    transform: translateX(-100vw);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-right-exit {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100vw);
+    opacity: 1;
+  }
+}
+
+/* Animation Classes */
+.apple-fade-in {
+  animation: apple-fade-in 1s ease-out forwards;
+}
+
+.apple-slide-up {
+  animation: apple-slide-up 0.8s ease-in-out forwards;
+}
+
+.apple-logo-pulse {
+  animation: apple-logo-pulse 3s ease-in-out infinite;
+}
+
+.apple-hello-breathe {
+  animation: apple-hello-breathe 3s ease-in-out infinite;
+}
+
+/* 3D Glass Morphism Classes */
+.glass-3d {
+  position: relative;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 24px 48px;
+  animation: glass-morning-glow 4s ease-in-out infinite;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.glass-3d::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 24px;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%);
+  z-index: -1;
+}
+
+.glass-3d::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 26px;
+  background: linear-gradient(135deg, 
+    rgba(255, 217, 155, 0.2) 0%,
+    rgba(255, 154, 158, 0.15) 50%,
+    rgba(254, 207, 239, 0.1) 100%);
+  z-index: -2;
+  filter: blur(1px);
+}
+
+.text-sunshine-3d {
+  animation: text-sunshine-glow 3s ease-in-out infinite;
+  background-size: 200% 200%;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  position: relative;
+}
+
+.gradient-animated {
+  background: var(--gradient-welcome);
+  background-size: 300% 300%;
+  animation: blue-to-purple-shift 6s ease infinite;
+}
+
+.blue-purple-gradient {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 25%, #8b5cf6 50%, #a855f7 75%, #c084fc 100%);
+  background-size: 400% 400%;
+  animation: blue-to-purple-shift 6s ease infinite;
+}
+
+.soft-purple-background {
+  background: var(--soft-purple-gradient);
+  background-attachment: fixed;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.swipe-bounce {
+  animation: swipe-bounce 2s ease-in-out infinite;
+}
+
+.minimal-float {
+  animation: minimal-float 2.5s ease-in-out infinite;
+}
+
+/* Mobile App Specific Styles */
+.mobile-app-container {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
+}
+
+.mobile-safe-area {
+  padding-top: var(--status-bar-height);
+  padding-bottom: var(--bottom-safe-area);
+  padding-left: var(--safe-area-inset-left);
+  padding-right: var(--safe-area-inset-right);
+}
+
+/* Enhanced touch interactions */
+.touch-optimized {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+
+/* Horizontal swipe gesture styles - Enhanced for mobile */
+.swipe-container {
+  touch-action: pan-x pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  overscroll-behavior: none;
+}
+
+.screen-transition {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Enhanced drag feedback for mobile */
+.dragging {
+  transition: none !important;
+}
+
+.drag-feedback {
+  opacity: 0.9;
+  transform: scale(0.99);
+}
+
+/* Apple-style text rendering */
+.apple-text {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'kern' 1;
+}
+
+/* Status bar styling for different mobile environments */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .mobile-status-bar {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* Horizontal navigation animations */
+.slide-left-enter {
+  animation: slide-left-enter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.slide-left-exit {
+  animation: slide-left-exit 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.slide-right-enter {
+  animation: slide-right-enter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.slide-right-exit {
+  animation: slide-right-exit 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Landscape orientation optimizations */
+@media (orientation: landscape) and (max-height: 500px) {
+  .mobile-app-container {
+    padding-top: calc(var(--status-bar-height) * 0.5);
+  }
+}
+
+/* High DPI display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  .apple-text {
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+}
+
+/* Prevent zoom on double-tap for mobile app feel */
+* {
+  touch-action: manipulation;
+}
+
+/* Hide scrollbars for mobile app experience */
+::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Bottom navigation indicator dots */
+.horizontal-nav-indicator {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 50;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.horizontal-nav-indicator .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  transition: all 0.3s ease;
+}
+
+.horizontal-nav-indicator .dot.active {
+  opacity: 1;
+  transform: scale(1.3);
+}
