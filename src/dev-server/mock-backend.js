@@ -244,7 +244,7 @@ function initializeCharactersDatabase() {
     { character: '休', pronunciation: 'xiū', meaning: 'rest', radicals: ['人', '木'], story: 'A person leaning against a tree, taking a peaceful rest', difficulty: 2, category: 'human' },
     { character: '桌', pronunciation: 'zhuō', meaning: 'table', radicals: ['木', '卓'], story: 'Outstanding wood crafted into a fine table', difficulty: 2, category: 'objects' },
     { character: '淋', pronunciation: 'lín', meaning: 'pour', radicals: ['氵', '木'], story: 'Water flowing down like rain through trees', difficulty: 2, category: 'nature' },
-    { character: '想', pronunciation: 'xiǎng', meaning: 'think', radicals: ['心', '目'], story: 'The heart and eyes working together in contemplation', difficulty: 3, category: 'abstract' },
+  { character: '想', pronunciation: 'xiǎng', meaning: 'think', radicals: ['心', '木', '目'], story: 'The heart and eyes working together in contemplation', difficulty: 3, category: 'abstract' },
     { character: '看', pronunciation: 'kàn', meaning: 'look', radicals: ['手', '目'], story: 'Using hand to shield eyes while looking into the distance', difficulty: 2, category: 'actions' },
     { character: '听', pronunciation: 'tīng', meaning: 'listen', radicals: ['口', '耳'], story: 'Opening mouth slightly to hear more clearly', difficulty: 2, category: 'actions' },
     { character: '跑', pronunciation: 'pǎo', meaning: 'run', radicals: ['足', '火'], story: 'Feet moving with the speed and energy of fire', difficulty: 2, category: 'actions' }

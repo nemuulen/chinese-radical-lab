@@ -6,6 +6,7 @@ import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Input } from './ui/input';
 import { UserProfile } from '../App';
+import { generateFunnyStoryFromRadicals } from '../utils/storyGen';
 
 interface LearningSectionProps {
   userProfile: UserProfile | null;
@@ -149,7 +150,7 @@ export function LearningSection({ userProfile }: LearningSectionProps) {
           </Card>
         </motion.div>
 
-        {/* Character Detail Section */}
+    {/* Character Detail Section */}
         <AnimatePresence mode="wait">
           {selectedCharacter && (
             <motion.div
@@ -197,33 +198,31 @@ export function LearningSection({ userProfile }: LearningSectionProps) {
                     </div>
                   </div>
 
-                  {selectedCharacter.story && (
-                    <div className="mb-4">
-                      <h3 className="text-lg font-medium text-gray-800 mb-3">Story</h3>
-                      <div className="bg-white/60 rounded-lg p-4 mb-4">
-                        <p className="text-gray-700 leading-relaxed text-sm">
-                          {selectedCharacter.story}
-                        </p>
-                      </div>
-
-                      {selectedCharacter.examples && (
-                        <div className="mb-4">
-                          <h4 className="text-sm font-medium text-gray-800 mb-2">Examples</h4>
-                          <div className="flex flex-wrap gap-2">
-                            {selectedCharacter.examples.map((example: string, index: number) => (
-                              <Badge
-                                key={index}
-                                variant="secondary"
-                                className="bg-blue-100 text-blue-700"
-                              >
-                                {example}
-                              </Badge>
-                            ))}
-                          </div>
-                        </div>
-                      )}
+                  <div className="mb-4">
+                    <h3 className="text-lg font-medium text-gray-800 mb-3">Story</h3>
+                    <div className="bg-white/60 rounded-lg p-4 mb-4">
+                      <p className="text-gray-700 leading-relaxed text-sm">
+                        {selectedCharacter.story || generateFunnyStoryFromRadicals([{ character: selectedCharacter.character, meaning: selectedCharacter.meaning }])}
+                      </p>
                     </div>
-                  )}
+
+                    {selectedCharacter.examples && (
+                      <div className="mb-4">
+                        <h4 className="text-sm font-medium text-gray-800 mb-2">Examples</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {selectedCharacter.examples.map((example: string, index: number) => (
+                            <Badge
+                              key={index}
+                              variant="secondary"
+                              className="bg-blue-100 text-blue-700"
+                            >
+                              {example}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
 
                   <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white border-0">
                     <Bookmark className="w-4 h-4 mr-2" />

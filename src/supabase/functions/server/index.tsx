@@ -566,7 +566,7 @@ async function initializeCharactersDatabase(): Promise<CharacterData[]> {
       character: '想',
       pronunciation: 'xiǎng',
       meaning: 'think',
-      radicals: ['心', '目'],
+      radicals: ['心', '木', '目'],
       story: 'The heart and eyes working together in contemplation',
       difficulty: 3,
       category: 'abstract'

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Shuffle, Sparkles, Star, RotateCcw, Archive, Beaker } from 'lucide-react';
 import { Card } from './ui/card';
@@ -7,6 +7,7 @@ import { Badge } from './ui/badge';
 import { ScrollArea } from './ui/scroll-area';
 import { UserProfile } from '../App';
 import { apiHelpers } from '../utils/api';
+import { generateFunnyStoryFromRadicals } from '../utils/storyGen';
 
 interface CreativeLabProps {
   userProfile: UserProfile | null;
@@ -138,7 +139,7 @@ export function CreativeLab({ userProfile, onUpdateProfile }: CreativeLabProps) 
       character: '想',
       pronunciation: 'xiǎng',
       meaning: 'think',
-      radicals: ['心', '目'],
+      radicals: ['心', '木', '目'],
       story: 'The heart and eyes working together in contemplation',
       difficulty: 3
     },
@@ -171,7 +172,7 @@ export function CreativeLab({ userProfile, onUpdateProfile }: CreativeLabProps) 
   const randomizeRadicals = useCallback(() => {
     const shuffled = [...radicalsDatabase].sort(() => Math.random() - 0.5);
     setAvailableRadicals(shuffled.slice(0, 12));
-  }, [radicalsDatabase]);
+  }, []);
 
   // Initialize with some random radicals
   useEffect(() => {
@@ -182,14 +183,14 @@ export function CreativeLab({ userProfile, onUpdateProfile }: CreativeLabProps) 
     setDraggedRadical(radical);
   };
 
-  const handleDragOver = (e: React.DragEvent) => {
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
   };
 
-  const handleDrop = (e: React.DragEvent) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    if (draggedRadical && workspaceRadicals.length < 3) {
-      if (!workspaceRadicals.find(r => r.id === draggedRadical.id)) {
+    if (draggedRadical && workspaceRadicals.length < 4) {
+      if (!workspaceRadicals.find((r: Radical) => r.id === draggedRadical.id)) {
         setWorkspaceRadicals([...workspaceRadicals, draggedRadical]);
       }
     }
@@ -197,7 +198,7 @@ export function CreativeLab({ userProfile, onUpdateProfile }: CreativeLabProps) 
   };
 
   const removeFromWorkspace = (radicalId: string) => {
-    setWorkspaceRadicals(workspaceRadicals.filter(r => r.id !== radicalId));
+    setWorkspaceRadicals(workspaceRadicals.filter((r: Radical) => r.id !== radicalId));
     setCurrentResult(null);
   };
 
@@ -207,7 +208,7 @@ export function CreativeLab({ userProfile, onUpdateProfile }: CreativeLabProps) 
     setIsAnimating(true);
     
     setTimeout(async () => {
-      const workspaceChars = workspaceRadicals.map(r => r.character).sort();
+  const workspaceChars = workspaceRadicals.map((r: Radical) => r.character).sort();
       
       // Find matching combination
       const combination = characterCombinations.find(combo => {
@@ -219,7 +220,7 @@ export function CreativeLab({ userProfile, onUpdateProfile }: CreativeLabProps) 
       if (combination) {
         // Check if already discovered
         const alreadyDiscovered = discoveredCharacters.find(
-          d => d.character === combination.character
+          (d: DiscoveredCharacter) => d.character === combination.character
         );
 
         const newDiscovery: DiscoveredCharacter = {
@@ -231,7 +232,7 @@ export function CreativeLab({ userProfile, onUpdateProfile }: CreativeLabProps) 
         setCurrentResult(newDiscovery);
         
         if (!alreadyDiscovered) {
-          setDiscoveredCharacters(prev => [newDiscovery, ...prev]);
+              setDiscoveredCharacters((prev: DiscoveredCharacter[]) => [newDiscovery, ...prev]);
           
           // Try to record discovery on backend
           try {
@@ -286,17 +287,70 @@ export function CreativeLab({ userProfile, onUpdateProfile }: CreativeLabProps) 
           }
         }
       } else {
-        // Failed combination
-        setCurrentResult({
-          character: '?',
-          pronunciation: '?',
-          meaning: 'Unknown combination',
+        // Create a custom character from radicals (prototype behaviour)
+  const charRepresentation = workspaceRadicals.map((r: Radical) => r.character).join('');
+        const meaning = 'Custom creation';
+        const pronunciation = '?';
+        const difficulty = Math.min(3, Math.max(1, Math.ceil(workspaceRadicals.length)));
+
+  const generatedStory = generateFunnyStoryFromRadicals(workspaceRadicals.map((r: Radical) => ({ character: r.character, meaning: r.meaning })));
+
+        const customDiscovery: DiscoveredCharacter = {
+          character: charRepresentation,
+          pronunciation,
+          meaning,
           radicals: workspaceChars,
-          story: 'These radicals don\'t form a known character. Try a different combination!',
-          difficulty: 0,
+          story: generatedStory,
+          difficulty,
           dateDiscovered: new Date().toISOString().split('T')[0],
-          isNew: false
-        });
+          isNew: true
+        };
+
+        setCurrentResult(customDiscovery);
+  setDiscoveredCharacters((prev: DiscoveredCharacter[]) => [customDiscovery, ...prev]);
+
+        // Try to record discovery on backend (best-effort)
+        try {
+          await apiHelpers.recordCreativeDiscovery(customDiscovery.character, workspaceChars);
+
+          if (userProfile && onUpdateProfile) {
+            const learnedCharacter = {
+              character: customDiscovery.character,
+              pronunciation: customDiscovery.pronunciation,
+              meaning: customDiscovery.meaning,
+              datelearned: new Date().toISOString().split('T')[0],
+              difficulty: customDiscovery.difficulty
+            };
+
+            const updatedProfile = {
+              ...userProfile,
+              learnedCharacters: [...(userProfile.learnedCharacters || []), learnedCharacter],
+              score: (userProfile.score || 0) + (customDiscovery.radicals.length * 10)
+            };
+
+            onUpdateProfile(updatedProfile);
+          }
+        } catch (error) {
+          console.error('Failed to record custom discovery on backend:', error);
+          // Fallback: update local profile if available
+          if (userProfile && onUpdateProfile) {
+            const learnedCharacter = {
+              character: customDiscovery.character,
+              pronunciation: customDiscovery.pronunciation,
+              meaning: customDiscovery.meaning,
+              datelearned: new Date().toISOString().split('T')[0],
+              difficulty: customDiscovery.difficulty
+            };
+
+            const updatedProfile = {
+              ...userProfile,
+              learnedCharacters: [...(userProfile.learnedCharacters || []), learnedCharacter],
+              score: (userProfile.score || 0) + (customDiscovery.radicals.length * 10)
+            };
+
+            onUpdateProfile(updatedProfile);
+          }
+        }
       }
       
       setIsAnimating(false);
@@ -307,6 +361,22 @@ export function CreativeLab({ userProfile, onUpdateProfile }: CreativeLabProps) 
     setWorkspaceRadicals([]);
     setCurrentResult(null);
   };
+
+  // Generate a funny mnemonic-style story locally to help memorizing
+  function generateFunnyStory(radicals: Radical[]) {
+    // Create a stable-ish sentence based on radicals' meanings
+    const meanings = radicals.map(r => r.meaning);
+    const chars = radicals.map(r => r.character).join(' + ');
+    const seed = meanings.join('-').length;
+    const templates = [
+      `Imagine ${meanings.join(' and ')} getting together for a wild tea party — they accidentally formed ${chars} and everyone laughed.`,
+      `When ${meanings.join(' met ')}, they realized forming ${chars} was the only way to solve their snack crisis — so they became a character.`,
+      `Legend says ${meanings.join(', ')} once tried karaoke and the song merged them into ${chars}. It's not elegant, but you'll never forget it.`,
+      `If ${meanings.join(' and ')} were superheroes, their team-up move would be ${chars} — dramatic, loud, and oddly memorable.`
+    ];
+
+    return templates[seed % templates.length];
+  }
 
   const getCategoryColor = (category: string) => {
     const colors = {
@@ -350,6 +420,30 @@ export function CreativeLab({ userProfile, onUpdateProfile }: CreativeLabProps) 
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-medium text-gray-800">Alchemy Workspace</h2>
                 <div className="flex gap-2">
+                  <Button
+                    onClick={() => {
+                      // Demo: preload 日 + 月 into available radicals and workspace then combine
+                      const demo = radicalsDatabase.filter(r => r.character === '日' || r.character === '月');
+                      setAvailableRadicals(prev => {
+                        // ensure demo radicals are present in the available list
+                        const others = prev.filter(p => p.character !== '日' && p.character !== '月');
+                        return [...demo, ...others].slice(0, 12);
+                      });
+                      // put them into workspace and trigger combine shortly after
+                      setWorkspaceRadicals(demo);
+                      setTimeout(() => {
+                        try {
+                          combineRadicals();
+                        } catch (e) {
+                          // ignore if combine needs state propagation
+                        }
+                      }, 250);
+                    }}
+                    size="sm"
+                    className="bg-yellow-400 hover:bg-yellow-500 text-white"
+                  >
+                    Demo 明
+                  </Button>
                   <Button
                     onClick={combineRadicals}
                     disabled={workspaceRadicals.length < 2 || isAnimating}
@@ -423,7 +517,7 @@ export function CreativeLab({ userProfile, onUpdateProfile }: CreativeLabProps) 
                       <div className="text-6xl font-light mb-2" style={{ fontFamily: 'serif' }}>
                         {currentResult.character}
                       </div>
-                      {currentResult.character !== '?' && (
+                          {currentResult.character !== '?' && (
                         <>
                           <div className="text-lg text-purple-600 font-medium">
                             {currentResult.pronunciation}
@@ -434,11 +528,58 @@ export function CreativeLab({ userProfile, onUpdateProfile }: CreativeLabProps) 
                           <p className="text-sm text-gray-600 mb-3">
                             {currentResult.story}
                           </p>
+                          {/* Show radicals used to form this character */}
+                          {currentResult.radicals && currentResult.radicals.length > 0 && (
+                            <div className="mt-3 flex items-center justify-center gap-2 flex-wrap">
+                              {currentResult.radicals.map((r: any, idx: number) => {
+                                const symbol = typeof r === 'string' ? r : (r.character || r[0] || '?');
+                                const meaning = typeof r === 'string' ? '' : (r.meaning ? ` — ${r.meaning}` : '');
+                                return (
+                                  <div key={`${symbol}-${idx}`} className="px-3 py-1 bg-gray-100 rounded-full border text-sm text-gray-700 flex items-center gap-2">
+                                    <span className="text-lg">{symbol}</span>
+                                    {meaning && <span className="text-xs text-gray-500">{meaning}</span>}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
                           {currentResult.isNew && (
                             <Badge className="bg-yellow-100 text-yellow-800">
                               <Star className="w-3 h-3 mr-1" />
                               New Discovery!
                             </Badge>
+                          )}
+                          {/* Save button for custom creations */}
+                          {currentResult.isNew && (
+                            <div className="mt-3 flex justify-center">
+                              <Button
+                                onClick={async () => {
+                                  // Save has already attempted to persist, but this gives explicit control
+                                  try {
+                                    await apiHelpers.recordCreativeDiscovery(currentResult.character, currentResult.radicals || []);
+                                    if (userProfile && onUpdateProfile) {
+                                      const learnedCharacter = {
+                                        character: currentResult.character,
+                                        pronunciation: currentResult.pronunciation,
+                                        meaning: currentResult.meaning,
+                                        datelearned: new Date().toISOString().split('T')[0],
+                                        difficulty: currentResult.difficulty
+                                      };
+                                      onUpdateProfile({
+                                        ...userProfile,
+                                        learnedCharacters: [...(userProfile.learnedCharacters || []), learnedCharacter]
+                                      });
+                                    }
+                                  } catch (e) {
+                                    console.warn('Save failed', e);
+                                  }
+                                }}
+                                size="sm"
+                                className="ml-3 bg-purple-600 text-white"
+                              >
+                                Save
+                              </Button>
+                            </div>
                           )}
                         </>
                       )}
